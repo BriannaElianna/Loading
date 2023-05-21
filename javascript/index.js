@@ -61,6 +61,16 @@ const jokes = [
   "What do you get when you cross RuPaul and a photographer? A queen who can capture the perfect shot!",
   "Why did the drag queen become a teacher? She knew how to educate with sass and fabulousness!",
   "What do you call a drag queen who's great at puzzles? A queen who can slay any jigsaw!",
+  "Why did Michelle Visage become a judge on Drag Race? To keep the queens in check and snatch those edges!",
+  "What do you call Michelle Visage when she's not happy with a queen's look? The shade police!",
+  "Why did Michelle Visage always wear a large necklace on Drag Race? To make sure the queens knew who was the boss!",
+  "What's Michelle Visage's favorite type of weather? Shady with a 100% chance of reading!",
+  "Why did Michelle Visage become a vocal coach on Drag Race? To ensure the queens hit every note and shade!",
+  "What did Michelle Visage say to a queen with a messy wig? 'Girl, you better sashay away and fix that tragedy!'",
+  "Why did the queens get nervous when Michelle Visage walked into the workroom? They knew the shade storm was coming!",
+  "What's Michelle Visage's secret weapon on Drag Race? The power of the side-eye and a perfectly timed read!",
+  "Why did Michelle Visage bring a fan to the judging panel? To cool down the queens when they're feeling the heat of her shade!",
+  "What's Michelle Visage's favorite type of music? The sound of a queen's soul being snatched by her critiques!",
   "What do you call a drag queen with a time machine? A glam traveler!"
 ];
 
@@ -80,8 +90,37 @@ let statusMessages = [
   "One more second"
 ];
 
+window.addEventListener('DOMContentLoaded', (event) => {
+  const headerText = document.querySelector('#header-text');
+  const bgColor = window.getComputedStyle(document.body).backgroundColor;
+
+  let isFadingOut = false;
+
+  setInterval(() => {
+    if (!isFadingOut) {
+      headerText.style.opacity = '0';
+      isFadingOut = true;
+    } else {
+      headerText.style.opacity = '1';
+      headerText.style.transition = 'opacity 2s';
+      headerText.style.color = bgColor;
+      setTimeout(() => {
+        headerText.style.transition = '';
+        headerText.style.color = '';
+      }, 2000);
+      isFadingOut = false;
+    }
+  }, 4000);
+});
+
 function getRandomJoke() {
-  // getRandomJoke function code here
+  const randomIndex = Math.floor(Math.random() * jokes.length);
+  const joke = jokes[randomIndex];
+  if (usedJokes.includes(joke)) {
+    return getRandomJoke(); // Get another joke if it has already been used
+  }
+  usedJokes.push(joke);
+  return joke;
 }
 
 function getRandomStatusMessage() {
@@ -90,7 +129,8 @@ function getRandomStatusMessage() {
 }
 
 function changeJoke() {
-  // changeJoke function code here
+  const jokeText = getRandomJoke();
+  loadingText.textContent = jokeText;
 }
 
 function changeStatusMessage() {
@@ -100,3 +140,4 @@ function changeStatusMessage() {
 
 setInterval(changeJoke, 5000);
 setInterval(changeStatusMessage, 10000);
+
